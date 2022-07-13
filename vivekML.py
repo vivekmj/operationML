@@ -1,5 +1,6 @@
 from datetime import *
 import investpy
+import pandas as pd
 
 def five_years_before():
     five_years = (datetime.now() - timedelta(days=5*365)).strftime("%d/%m/%Y")
@@ -13,8 +14,9 @@ def generate_csv(stock, stock_country):
     file_name = stock + "_" + five_years_before().replace('/', '') + "_" + get_today().replace('/', '') + '.csv'
     print(file_name, "created successfully", stock)
     df.to_csv(file_name + '.csv')
-    
-list_of_stocks = ['ICBK','RELI', 'DLF', 'BRTI','TISC']
+
+data = pd.read_csv('stockBook.csv')
+list_of_stocks = data['StockId']
 
 for stock in list_of_stocks:
     search_country = investpy.search_quotes(text=stock, products=['stocks'], n_results=1)
